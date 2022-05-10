@@ -1,0 +1,48 @@
+	
+add this function your model
+
+	public JSONObject getOneUser(int id) {
+		Connection connection;
+		PreparedStatement preparedStatement;
+		JSONObject json = new JSONObject();
+		
+		try {
+			connection = DatabaseConnection.getDBConnection();
+			
+			preparedStatement = connection.prepareStatement("SELECT * FROM users where id=?");
+			preparedStatement.setInt(1, id);
+			ResultSet rs = preparedStatement.executeQuery();
+
+			while(rs.next())
+			{
+				json.put("id", rs.getInt(1));
+				json.put("name", rs.getString(2));
+				json.put("email", rs.getString(3));
+				json.put("nic", rs.getString(4));
+				json.put("phone", rs.getString(5));
+				json.put("address", rs.getString(6));
+				json.put("privilege", rs.getString(8));
+			}
+			
+		}catch (ClassNotFoundException | SQLException  e) {
+			setSuccess("unsuccess");
+		}
+		return json;
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+String button = "<button type='button' onclick='edit("+resultSet.getString(1)+")' class='btn btn-primary'>Edit</button><br><button type='button' onclick='deletes("+resultSet.getString(1)+")' class='btn btn-warning'>Delete</button>";
+				
